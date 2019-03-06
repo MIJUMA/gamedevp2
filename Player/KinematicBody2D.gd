@@ -36,7 +36,8 @@ func _ready():
 	play_animation(IDLE_ANIM)
 	$CollisionShape2DCrouch.disabled = true
 	$CollisionShape2D.disabled = false
-	pass	
+	pass
+
 
 func _input(event):
 	if(event.is_action_pressed("ui_down")):
@@ -148,11 +149,6 @@ func slide(going_right):
 			motion.x = SLIDE_DISTANCE
 		motion = move_and_slide(motion, UP)
 		slide_covered +=1
-		var player = AudioStreamPlayer.new()
-		self.add_child(player)
-		player.stream = load("res://Player/Sounds/slide.wav")
-		player.play()
-		return
 		return true
 	else:
 		$CollisionShape2DCrouch.disabled = true
@@ -184,22 +180,13 @@ func jump(INPUT_UP):
 		if INPUT_UP:
 			motion.y = JUMP_HEIGHT
 			motion = move_and_slide(motion, UP)
-			var player = AudioStreamPlayer.new()
-			self.add_child(player)
-			player.stream = load("res://Player/Sounds/Jump.wav")
-			player.play()
 			return
-
 	else:
 		if INPUT_UP and is_allowed_to_jump:
 			is_allowed_to_jump = false
 			motion.y = JUMP_HEIGHT
-			motion = move_and_slide(motion, UP)					
-			var player = AudioStreamPlayer.new()
-			self.add_child(player)
-			player.stream = load("res://Player/Sounds/Jump.wav")
-			player.play()
-			
+			motion = move_and_slide(motion, UP)
+					
 	
 func crouch(INPUT_DOWN):	
 	if is_on_floor():	
@@ -207,6 +194,7 @@ func crouch(INPUT_DOWN):
 			$CollisionShape2DCrouch.disabled = false
 			$CollisionShape2D.disabled = true
 			block_movement = true
+
 
 func is_player_walking():
 	return Input.is_key_pressed(KEY_ALT) and !block_movement
