@@ -149,6 +149,10 @@ func slide(going_right):
 			motion.x = SLIDE_DISTANCE
 		motion = move_and_slide(motion, UP)
 		slide_covered +=1
+		var player = AudioStreamPlayer.new()
+		self.add_child(player)
+		player.stream = load("res://Player/Sounds/slide.wav")
+		player.play()
 		return true
 	else:
 		$CollisionShape2DCrouch.disabled = true
@@ -180,13 +184,21 @@ func jump(INPUT_UP):
 		if INPUT_UP:
 			motion.y = JUMP_HEIGHT
 			motion = move_and_slide(motion, UP)
+			var player = AudioStreamPlayer.new()
+			self.add_child(player)
+			player.stream = load("res://Player/Sounds/Jump.wav")
+			player.play()
+			return
 			return
 	else:
 		if INPUT_UP and is_allowed_to_jump:
 			is_allowed_to_jump = false
 			motion.y = JUMP_HEIGHT
 			motion = move_and_slide(motion, UP)
-					
+			var player = AudioStreamPlayer.new()
+			self.add_child(player)
+			player.stream = load("res://Player/Sounds/Jump.wav")
+			player.play()
 	
 func crouch(INPUT_DOWN):	
 	if is_on_floor():	
